@@ -96,6 +96,14 @@
 
 <div class="w3-quarter">
 <h2>Lista de cursos</h2>
+	{% if user.is_authenticated %}
+		{% if user.is_teach %}
+		<!-- <form action="{% url 'add_curso' %}" method="POST"> -->
+			<!-- <button type="submit" class="w3-button w3-small w3-btn-btn w3-round w3-teal">Añadir Curso</button> -->
+		<!-- </form> -->
+		<a href="{% url 'add_curso'%}" class="w3-button w3-small w3-btn-btn w3-round w3-teal">Añadir Curso</a>
+		{% endif %}
+	{% endif %}
 </div>
 
 {% for curso in cursos %}
@@ -106,22 +114,29 @@
   <h5>Profesor: {{curso.profesor}}</h5>
   <h5>Alumnos: {{curso.count_alumnos}}</h5>
   </div>
-  {% if not curso in mis_cursos %}
-	  <form action="{% url 'matricula' curso.id %}" method="POST" class="w3-padding">
-	  {% csrf_token %}
-		<button type="submit" class="w3-button w3-small w3-btn-btn w3-round w3-teal">Matricularme</button>
-	  </form>
-  {% else %}
-	  <form action="#" method="POST" class="w3-padding">
-		{% csrf_token %}
-		<a class="w3-button w3-small w3-round w3-green">Matriculado <i class="fa fa-check-circle"></i></a>
-		<a href="{% url 'curso_contenido' curso.id %}" class="w3-button w3-small w3-btn-btn w3-round w3-blue">Entrar</a>
-	  </form>
-  {% endif %}
+	{% if not user.is_teach %}
+	  {% if not curso in mis_cursos %}
+		  <form action="{% url 'matricula' curso.id %}" method="POST" class="w3-padding">
+		  {% csrf_token %}
+			<button type="submit" class="w3-button w3-small w3-btn-btn w3-round w3-teal">Matricularme</button>
+		  </form>
+	  {% else %}
+		  <form action="#" method="POST" class="w3-padding">
+			{% csrf_token %}
+			<a class="w3-button w3-small w3-round w3-green">Matriculado <i class="fa fa-check-circle"></i></a>
+			<a href="{% url 'curso_contenido' curso.id %}" class="w3-button w3-small w3-btn-btn w3-round w3-blue">Entrar</a>
+		  </form>
+	  {% endif %}
+	{% else %}
+		<form action="#" method="POST" class="w3-padding">
+			{% csrf_token %}
+			<a href="{% url 'curso_contenido' curso.id %}" class="w3-button w3-small w3-btn-btn w3-round w3-blue">Entrar</a>
+		  </form>
+    {% endif %}
   </div>
 </div>
 {% endfor %}
-
+	
 </div>
 
 <!-- Container -->

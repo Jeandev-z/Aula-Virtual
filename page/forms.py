@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, Curso
 from django.contrib.auth.forms import UserCreationForm
 
 class SignupForm(UserCreationForm):
@@ -32,3 +32,15 @@ class LoginForm(forms.Form):
         widgets = {
         'password': forms.PasswordInput(),
     }
+    
+class AddCursoForm(forms.Form):
+    name = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control','type':'text','name': 'Nombre','placeholder':'Ingrese el nombre del curso'}), 
+        label='Nombre del curso')
+    
+    code = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'form-control','type':'text','name': 'Código','placeholder':'Ingrese el código del curso'}), 
+        label='Código del curso')
+    class Meta:
+        model = Curso   
+        fields = {'name', 'code'}

@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.urls import path
-from page.views import Home, Login, logout, signup, matricula, CursoContenido
+from page.views import Home, Login, logout, signup, matricula, CursoContenido, AddCurso
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^logout/$', logout, name='logout'),
     url(r'^signup/$', signup, name='signup'),
     url(r'^cursos/(?P<id>\d+)/matricula/$', matricula, name='matricula'),
-    path('curso_contenido/<int:id>', CursoContenido.as_view(), name='curso_contenido')
+    path('curso-contenido/<int:id>', CursoContenido.as_view(), name='curso_contenido'),
+    path('agregar-curso', AddCurso.as_view(), name='add_curso'),
 ]

@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import TemplateView
-from .forms import LoginForm, SignupForm
+from .forms import LoginForm, SignupForm, AddCursoForm
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import authenticate, login as django_login , logout as django_logout 
 from .models import User, Curso
@@ -14,7 +15,8 @@ class Home(TemplateView):
         kwargs['user'] = user
         cursos = Curso.objects.all()
         kwargs['cursos'] = cursos
-        kwargs['mis_cursos'] = cursos.filter(alumnos = user)
+        if self.request.user.is_authenticated:
+            kwargs['mis_cursos'] = cursos.filter(alumnos = user)
         
         return kwargs
         
@@ -56,7 +58,7 @@ def logout(request):
     if request.method == 'POST':
         django_logout(request)
         print("L O G O U T")  
-        return render(request, "home.html")
+        return redirect(reverse('home'))
             
 def signup(request):
     
@@ -89,8 +91,30 @@ class CursoContenido(TemplateView):
     
     def get_context_data(self, **kwargs):
         id = kwargs.get('id')
+        user = User.objects.filter(id=self.request.user.id).first()
         curso = Curso.objects.get(id=id)
+        kwargs['user'] = user
         kwargs['curso'] = curso
         
         return kwargs
+
+class AddCurso(TemplateView):
+    template_name = 'curso_agregar.html'
+    
+    def get_context_data(self, **kwargs):
+        user = User.objects.filter(id=self.request.user.id).first()
+        kwargs['form'] = AddCursoForm
+        kwargs['user'] = user
+        return kwargs
+    
+    def post(self, request, *args, **kwargs):
+        user = User.objects.filter(id=self.request.user.id).first()
+        form = AddCursoForm(data = self.request.POST)
+        if form.is_valid():
+            data = form.clean()
+            curso = Curso.objects.create(profesor=user, name=data.get('name'), code=data.get('code'))
+            print("es válido")
+            return redirect(reverse('curso_contenido', args = [curso.id]))
+        return render(self.request, "curso_agregar.html", {'form': form})
+
         
