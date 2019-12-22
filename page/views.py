@@ -117,4 +117,22 @@ class AddCurso(TemplateView):
             return redirect(reverse('curso_contenido', args = [curso.id]))
         return render(self.request, "curso_agregar.html", {'form': form})
 
-        
+class Gestor(TemplateView):
+    template_name = 'gestor_panel.html'
+    
+    def get_context_data(self, **kwargs):
+        kwargs['users'] = User.objects.all()
+        return kwargs
+
+class Teach(TemplateView):
+    
+    def post(self, request, *args, **kwargs):
+        id = kwargs.get('id')
+        user = User.objects.get(id=id)
+        if user.is_teach:
+            user.is_teach = False
+            user.save()
+        else:
+            user.is_teach = True
+            user.save()
+        return redirect('gestor_panel')
