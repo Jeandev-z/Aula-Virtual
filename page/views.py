@@ -38,13 +38,14 @@ class Login(TemplateView):
             password = self.request.POST['password']
             print(email)
             print(password)
-            username = User.objects.filter(email=email).first().username 
-            print(username)
-            user = authenticate(username=username, password=password)
-            print(user)
-            if user is not None:
-                django_login(self.request,user)
-                return redirect('home')
+            if User.objects.filter(email=email).first():
+                username = User.objects.filter(email=email).first().username 
+                print(username)
+                user = authenticate(username=username, password=password)
+                print(user)
+                if user is not None:
+                    django_login(self.request,user)
+                    return redirect('home')
             else:
                 print('no existe este usuario')
                 return render(self.request, "login.html", {'login_form': form, 'signup_form': SignupForm})

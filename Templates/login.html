@@ -65,6 +65,52 @@
   </div>
 </div>
 
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+input[type=text], input[type=password]{
+  width: 70%;
+  padding: 12px;
+  border: 1px solid #008080;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+
+input[type=submit] {
+  background-color: #008080;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #008080;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
+
+
 <div class="w3-center">
 <div class="w3-container w3-padding w3-margin">
 		<form action="{% url 'login' %}" method="POST" class="w3-half">
@@ -74,14 +120,14 @@
 					<p class="w3-text-red">{{ non_field_error }}</p>
 				  {% endfor %}  
 				  
-				  <p>Email:
+				  <p>
 				  {{ login_form.email.errors }}
 				  {{ login_form.email }}</p>
 
-				  <p>Contraseña:
+				  <p>
 				  {{ login_form.password.errors }}
 				  {{ login_form.password }}</p>
-			<button type="submit" class="w3-button w3-teal w3-round"><i class="fa fa-upload"></i> Guardar</button>
+			<button type="submit" class="w3-button w3-teal w3-round"><i class="fa fa-upload"></i> Ingresar</button>
 		</form>
 		
 		<form action="{% url 'signup' %}" method="POST" class="w3-half">
@@ -91,18 +137,18 @@
 					<p class="w3-text-red">{{ non_field_error }}</p>
 				  {% endfor %} 
 
-				  <p>Email:
+				  <p>
 				  {{ signup_form.email.errors }}
 				  {{ signup_form.email }}</p>
 
-				  <p>Contraseña:
+				  <p>
 				  {{ signup_form.password1.errors }}
 				  {{ signup_form.password1 }}</p>
 				  
-				  <p>Confirmación de contraseña:
+				  <p>
 				  {{ signup_form.password2.errors }}
 				  {{ signup_form.password2 }}</p>
-			<button type="submit" class="w3-button w3-teal w3-round"><i class="fa fa-upload"></i> Guardar</button>
+			<button type="submit" class="w3-button w3-teal w3-round"><i class="fa fa-upload"></i> Registrarse</button>
 		</form>
 
 </div>
