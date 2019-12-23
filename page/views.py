@@ -46,6 +46,7 @@ class Login(TemplateView):
                 if user is not None:
                     django_login(self.request,user)
                     return redirect('home')
+                return render(self.request, "login.html", {'login_form': form, 'signup_form': SignupForm})
             else:
                 print('no existe este usuario')
                 return render(self.request, "login.html", {'login_form': form, 'signup_form': SignupForm})
