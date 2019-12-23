@@ -25,7 +25,7 @@ SECRET_KEY = 'qxq-aulu*c)66%srfa^et8f0cik%fdozqwc8b&sz)=c94gbofo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['warm-harbor-97349.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['warm-harbor-97349.herokuapp.com', '127.0.0.1', 'aulavirtual99.herokuapp.com']
 
 
 # Application definition
