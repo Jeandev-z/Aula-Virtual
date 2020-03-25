@@ -1,2 +1,2 @@
 # Aula-Virtual
-Sitio web de la aula virtual jp
+Sitio web del aula virtual jp
